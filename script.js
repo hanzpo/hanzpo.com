@@ -32,29 +32,6 @@ const workExperiences = {
   },
 };
 
-// Parallax scroll effect (disabled on mobile to save battery)
-function initParallaxScroll(factor = -0.25) {
-  if (window.matchMedia('(max-width: 768px)').matches) return;
-
-  let rafId = 0;
-
-  function update() {
-    const y = window.scrollY * factor;
-    document.documentElement.style.setProperty('--bg-offset-y', `${y}px`);
-  }
-
-  function onScroll() {
-    if (rafId) return;
-    rafId = window.requestAnimationFrame(() => {
-      update();
-      rafId = 0;
-    });
-  }
-
-  update();
-  window.addEventListener('scroll', onScroll, { passive: true });
-}
-
 // Modal functionality
 function initModal() {
   const modal = document.getElementById('modal');
@@ -178,7 +155,6 @@ function initScrollAnimations() {
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  initParallaxScroll();
   initModal();
   initScrollAnimations();
 });

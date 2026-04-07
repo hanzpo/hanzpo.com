@@ -24,7 +24,7 @@ body {
 /* Background */
 .background-image {
   background-color: #221F18;
-  background-position: center var(--bg-offset-y, 0px), center var(--bg-offset-y, 0px);
+  background-position: center, center;
   background-image: 
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
