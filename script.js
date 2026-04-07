@@ -3,10 +3,10 @@ const workExperiences = {
   kalshi: {
     company: 'kalshi',
     role: 'software engineer intern',
-    dates: 'incoming jan 2026',
+    dates: 'jan 2026 - present',
     logo: '/images/kalshi.png',
     logoAlt: 'kalshi logo',
-    description: 'trade on anything',
+    description: 'building software for the world\'s first regulated prediction market.',
     logoStyle: 'cover',
     hasWhiteBg: false,
   },
@@ -32,8 +32,10 @@ const workExperiences = {
   },
 };
 
-// Parallax scroll effect
+// Parallax scroll effect (disabled on mobile to save battery)
 function initParallaxScroll(factor = -0.25) {
+  if (window.matchMedia('(max-width: 768px)').matches) return;
+
   let rafId = 0;
 
   function update() {
@@ -95,13 +97,30 @@ function initModal() {
     document.body.style.overflow = '';
   }
 
+  let lastFocusedElement = null;
+
   // Event listeners for work cards
   document.querySelectorAll('.work-card').forEach(card => {
     card.addEventListener('click', () => {
-      const workId = card.dataset.work;
-      openModal(workId);
+      lastFocusedElement = card;
+      openModal(card.dataset.work);
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        lastFocusedElement = card;
+        openModal(card.dataset.work);
+      }
     });
   });
+
+  // Focus the close button when modal opens
+  const originalOpen = openModal;
+  openModal = function(workId) {
+    originalOpen(workId);
+    modalClose.focus();
+  };
 
   // Close modal events
   modalBackdrop.addEventListener('click', closeModal);
@@ -113,6 +132,16 @@ function initModal() {
       closeModal();
     }
   });
+
+  // Return focus to the card that opened the modal
+  const originalClose = closeModal;
+  closeModal = function() {
+    originalClose();
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+      lastFocusedElement = null;
+    }
+  };
 }
 
 // Intersection Observer for scroll animations

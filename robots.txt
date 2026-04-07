@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /images
+
+Sitemap: https://hanzpo.com/sitemap.xml

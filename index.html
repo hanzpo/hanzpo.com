@@ -6,14 +6,14 @@
     <title>hey, i'm hanz</title>
     <meta
       name="description"
-      content="i'm a computer science student at the university of waterloo with an interest in building software. i also enjoy learning about finance, urban planning, and languages in my spare time."
+      content="i study computer science at the university of waterloo. i like building things that make complex systems feel simple. currently at kalshi, building software for the world's first regulated prediction market."
     />
 
     <!-- Open Graph -->
     <meta property="og:title" content="hey, i'm hanz" />
     <meta
       property="og:description"
-      content="i'm a computer science student at the university of waterloo with an interest in building software. i also enjoy learning about finance, urban planning, and languages in my spare time."
+      content="i study computer science at the university of waterloo. i like building things that make complex systems feel simple. currently at kalshi, building software for the world's first regulated prediction market."
     />
     <meta property="og:url" content="https://hanzpo.com" />
     <meta property="og:site_name" content="hanz po" />
@@ -149,7 +149,7 @@
             "@type": "Role",
             "roleName": "Software Engineer Intern",
             "startDate": "2026-01",
-            "description": "Incoming software engineer intern at Kalshi, a regulated prediction market exchange.",
+            "description": "Software engineer intern at Kalshi, building software for the world's first regulated prediction market exchange.",
             "worksFor": {
               "@type": "Organization",
               "name": "Kalshi",
@@ -250,32 +250,25 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="background-image">
-    <!-- Hidden image for OG preview -->
-    <img
-      src="/opengraph-image.png"
-      alt="site preview image"
-      width="0"
-      height="0"
-      style="display: none"
-    />
+    <a href="#main-content" class="skip-link">skip to main content</a>
 
     <!-- Hero Section -->
-    <div class="hero-section">
+    <div class="hero-section" id="main-content">
       <div class="hero-content">
         <h1 class="hero-title animate-item">hey, i'm hanz.</h1>
 
         <p class="hero-description animate-item">
-          i'm a computer science student at the university of waterloo. i have a
-          passion for building software and systems with the user in mind. i
-          also enjoy learning about finance, urban planning, and languages in my
-          spare time.
+          i study computer science at the university of waterloo. i like
+          building things that make complex systems feel simple. currently at
+          kalshi, building software for the world's first regulated prediction
+          market.
         </p>
 
         <h2 class="recently-title animate-item">recently:</h2>
 
         <div class="work-cards">
           <!-- Kalshi -->
-          <div class="work-card animate-item" data-work="kalshi">
+          <div class="work-card animate-item" data-work="kalshi" role="button" tabindex="0">
             <div class="work-card-left">
               <div class="work-logo">
                 <img
@@ -289,11 +282,11 @@
                 <p class="work-role">software engineer intern</p>
               </div>
             </div>
-            <div class="work-dates">incoming jan 2026</div>
+            <div class="work-dates">jan 2026 - present</div>
           </div>
 
           <!-- Shopify -->
-          <div class="work-card animate-item" data-work="shopify">
+          <div class="work-card animate-item" data-work="shopify" role="button" tabindex="0">
             <div class="work-card-left">
               <div class="work-logo white-bg">
                 <img
@@ -311,7 +304,7 @@
           </div>
 
           <!-- Cohere -->
-          <div class="work-card animate-item" data-work="cohere">
+          <div class="work-card animate-item" data-work="cohere" role="button" tabindex="0">
             <div class="work-card-left">
               <div class="work-logo white-bg">
                 <img
@@ -378,7 +371,7 @@
             >linkedin</a
           >
           <a
-            href="https://x.com/hanzpo"
+            href="https://x.com/hanznathanpo"
             class="social-link animate-item"
             target="_blank"
             rel="noopener noreferrer"
@@ -423,7 +416,7 @@
     <!-- Experience Modal -->
     <div id="modal" class="modal" aria-hidden="true">
       <div class="modal-backdrop"></div>
-      <div class="modal-content" role="dialog" aria-modal="true">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <button class="modal-close" aria-label="Close">
           <svg
             xmlns="http://www.w3.org/2000/svg"
