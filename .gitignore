@@ -14,3 +14,7 @@ Thumbs.db
 .claude
 node_modules/
 .next/
+
+# Astro
+dist/
+.astro/
