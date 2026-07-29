@@ -291,6 +291,12 @@ body {
   height: 100%;
 }
 
+/* A circular mark needs less inset than a square glyph to read at the same
+   optical weight in the plate. */
+.work-logo.round-mark {
+  padding: 2px;
+}
+
 .logo-cover {
   object-fit: cover;
 }
@@ -323,7 +329,10 @@ body {
 
 /* School */
 .school-card {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(1px);
