@@ -67,7 +67,8 @@ body {
   outline-offset: 2px;
 }
 
-.work-card:focus-visible {
+.work-card:focus-visible,
+.project-card:focus-visible {
   border-color: rgba(255, 255, 255, 0.3);
   outline: 2px solid #e5e7eb;
   outline-offset: 2px;
@@ -255,7 +256,10 @@ body {
   font-family: 'Lora', serif;
 }
 
-.work-card {
+/* Work and project cards share one rule so their resting and hover states
+   can't drift apart. */
+.work-card,
+.project-card {
   padding: 0.75rem;
   display: flex;
   align-items: center;
@@ -265,10 +269,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   backdrop-filter: blur(1px);
+  text-decoration: none;
   transition: border-color 0.2s, transform 0.2s;
 }
 
-.work-card:hover {
+.work-card:hover,
+.project-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
   transform: scale(1.02);
 }
@@ -335,6 +341,32 @@ body {
   .work-dates {
     display: none;
   }
+}
+
+/* Projects
+   Plain links for now; the card markup matches the work cards so they can
+   become modal triggers later without restyling. */
+.project-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: 'Lora', serif;
+}
+
+.project-name {
+  font-weight: 500;
+  color: #e7e5e4;
+}
+
+.project-link {
+  color: #78716c;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.project-card:hover .project-link {
+  color: #a8a29e;
 }
 
 /* School */
