@@ -188,17 +188,25 @@ body {
   color: #e7e5e4;
 }
 
-/* Social Links */
+/* Social Links
+   Stacked one per line, and set a step below the headings on the right so the
+   block reads as secondary to the intro above it. */
+.social .section-title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
 .social-links {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1.25rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
   font-family: 'Lora', serif;
 }
 
 .social-link {
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   color: #a8a29e;
   text-decoration: none;
   transition: color 0.2s;
@@ -211,14 +219,14 @@ body {
 .webring {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-top: 1rem;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
 }
 
 .webring a {
   display: flex;
   align-items: center;
-  font-size: 1.0625rem;
+  font-size: 0.9375rem;
   color: #a8a29e;
   text-decoration: none;
   transition: color 0.2s;
@@ -229,6 +237,8 @@ body {
 }
 
 .webring img {
+  width: 20px;
+  height: 20px;
   opacity: 0.75;
   transition: opacity 0.2s;
 }
