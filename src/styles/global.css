@@ -385,17 +385,6 @@ body {
   color: #a8a29e;
 }
 
-.project-link {
-  color: #78716c;
-  font-size: 0.875rem;
-  white-space: nowrap;
-  transition: color 0.2s;
-}
-
-.project-card:hover .project-link {
-  color: #a8a29e;
-}
-
 /* School */
 .school-card {
   padding: 0.75rem;
