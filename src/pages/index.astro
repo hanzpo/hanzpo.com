@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 
 const title = "hey, i'm hanz";
 const description =
-  "i study computer science at the university of waterloo. i like building things and solving problems. currently at kalshi, building software for the world's first regulated prediction market.";
+  "i study computer science at the university of waterloo. i like building things and solving problems. currently at rilla, building speech analytics for outside sales teams.";
 ---
 
 <Base title={title} description={description} path="/" bodyClass="background-image index-body">
@@ -70,7 +70,19 @@ const description =
         {
           "@type": "Role",
           "roleName": "Software Engineer Intern",
+          "startDate": "2026-05",
+          "description": "Software engineer intern at Rilla, building speech analytics for outside sales teams.",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Rilla",
+            "description": "A speech analytics platform for outside sales and service teams."
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "Software Engineer Intern",
           "startDate": "2026-01",
+          "endDate": "2026-04",
           "description": "Software engineer intern at Kalshi, building software for the world's first regulated prediction market exchange.",
           "worksFor": {
             "@type": "Organization",
@@ -165,8 +177,8 @@ const description =
 
         <p class="hero-description animate-item" style="--d: 0.24s">
           i study computer science at the university of waterloo. i like
-          building things and solving problems. currently at kalshi, building
-          software for the world's first regulated prediction market.
+          building things and solving problems. currently at rilla, building
+          speech analytics for outside sales teams.
         </p>
       </div>
 
@@ -192,7 +204,7 @@ const description =
     <!-- Right column: the only scrollable region. -->
     <div class="index-right">
       <section class="panel">
-        <h2 class="section-title animate-item" style="--d: 0.28s">work:</h2>
+        <h2 class="section-title animate-item" style="--d: 0.28s">work</h2>
 
         <div class="work-cards">
           <!-- Rilla -->
@@ -254,11 +266,11 @@ const description =
       </section>
 
       <section class="panel">
-        <h2 class="section-title animate-item" style="--d: 0.68s">school:</h2>
+        <h2 class="section-title animate-item" style="--d: 0.68s">school</h2>
 
         <div class="school-card animate-item" style="--d: 0.76s">
           <h3 class="school-name">university of waterloo</h3>
-          <p class="school-degree">bachelor of computer science</p>
+          <p class="school-degree">computer science</p>
         </div>
       </section>
     </div>
