@@ -1,9 +1,19 @@
 // Work experience data
 const workExperiences = {
+  rilla: {
+    company: 'rilla',
+    role: 'software engineer intern',
+    dates: 'may 2026 - present',
+    logo: '/images/rilla.png',
+    logoAlt: 'rilla logo',
+    description: 'building speech analytics for outside sales teams.',
+    logoStyle: 'cover',
+    hasWhiteBg: false,
+  },
   kalshi: {
     company: 'kalshi',
     role: 'software engineer intern',
-    dates: 'jan 2026 - present',
+    dates: 'jan 2026 - apr 2026',
     logo: '/images/kalshi.png',
     logoAlt: 'kalshi logo',
     description: 'building software for the world\'s first regulated prediction market.',
@@ -121,41 +131,22 @@ function initModal() {
   };
 }
 
-// Intersection Observer for scroll animations
-function initScrollAnimations() {
-  // Animate hero section items on load
-  const heroItems = document.querySelectorAll('.hero-section .animate-item, .work-cards .animate-item, .scroll-indicator.animate-item');
-  
-  // Trigger hero animations after a small delay
+// Entrance animations. The page is a single screen now, so everything
+// animates in on load; each item carries its own delay via the --d custom
+// property set in the markup.
+function initEntranceAnimations() {
+  const items = document.querySelectorAll('.animate-item');
+
   setTimeout(() => {
-    heroItems.forEach(item => {
+    items.forEach(item => {
       item.classList.add('visible');
     });
   }, 100);
-
-  // Intersection Observer for social section
-  const socialSection = document.getElementById('next');
-  const socialItems = socialSection.querySelectorAll('.animate-item');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        socialItems.forEach(item => {
-          item.classList.add('visible');
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.4
-  });
-
-  observer.observe(socialSection);
 }
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initModal();
-  initScrollAnimations();
+  initEntranceAnimations();
 });
 
