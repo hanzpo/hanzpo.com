@@ -124,6 +124,26 @@ body {
      container; the negative margin keeps content optically in place. */
   padding: 6px 8px;
   margin: -6px -8px;
+  /* Edges fade out to signal there's more to scroll to. Sized from the
+     scroll position in main.js, so each edge ramps in as you leave it and
+     stays flat at 0 when there's nothing that way. A mask rather than an
+     overlay, so the page's grid still shows through the faded band. */
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bottom)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bottom)),
+    transparent
+  );
 }
 
 /* Single column: the whole page scrolls again. Also applied to short
@@ -144,6 +164,9 @@ body {
     overflow-y: visible;
     padding: 0;
     margin: 0;
+    /* Not a scroll container here, so it must never carry an edge fade. */
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 
@@ -162,7 +185,7 @@ body {
 /* Typography */
 .hero-title {
   font-family: 'Crimson Pro', serif;
-  font-size: 3.25rem;
+  font-size: 3.5rem;
   line-height: 1.05;
   margin-bottom: 1.25rem;
   color: #e7e5e4;
@@ -170,14 +193,14 @@ body {
 
 @media (max-width: 900px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.625rem;
   }
 }
 
 .hero-description {
   font-family: 'Crimson Pro', serif;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: 1.375rem;
+  line-height: 1.9rem;
   color: #d6d3d1;
 }
 

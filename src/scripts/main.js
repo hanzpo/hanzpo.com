@@ -144,9 +144,35 @@ function initEntranceAnimations() {
   }, 100);
 }
 
+// Fades the right column's edges to show it scrolls. Each edge grows with
+// how far you've scrolled away from it, capped at FADE_MAX, so it eases in
+// instead of popping and sits at 0 when there's nothing that direction --
+// including when the layout collapses and the column stops scrolling at all.
+function initScrollFade() {
+  const column = document.querySelector('.index-right');
+  if (!column) return;
+
+  const FADE_MAX = 48;
+
+  function update() {
+    const scrollable = column.scrollHeight - column.clientHeight;
+    const top = scrollable > 1 ? Math.min(column.scrollTop, FADE_MAX) : 0;
+    const bottom =
+      scrollable > 1 ? Math.min(scrollable - column.scrollTop, FADE_MAX) : 0;
+
+    column.style.setProperty('--fade-top', `${top}px`);
+    column.style.setProperty('--fade-bottom', `${bottom}px`);
+  }
+
+  column.addEventListener('scroll', update, { passive: true });
+  if (window.ResizeObserver) new ResizeObserver(update).observe(column);
+  update();
+}
+
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initEntranceAnimations();
+  initScrollFade();
 });
 
