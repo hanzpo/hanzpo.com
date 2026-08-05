@@ -12,7 +12,7 @@ Thumbs.db
 .env
 .env.local
 .claude
-node_modules/
+node_modules
 .next/
 
 # Astro
