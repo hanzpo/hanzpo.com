@@ -213,8 +213,9 @@ body {
 }
 
 /* Social Links
-   Stacked one per line, and set a step below the headings on the right so the
-   block reads as secondary to the intro above it. */
+   A single row separated by dots, with the webring centered beneath. Set a
+   step below the headings on the right so the block reads as secondary to
+   the intro above it. */
 .social .section-title {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -223,10 +224,15 @@ body {
 
 .social-links {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
   font-family: 'Lora', serif;
+}
+
+.social-links .dot {
+  color: #57534e;
+  user-select: none;
 }
 
 .social-link {
@@ -243,8 +249,31 @@ body {
 .webring {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   margin-top: 0.85rem;
+}
+
+/* ASCII Donut
+   Fills the gap between the intro and the links. The frame is always 80
+   columns, so the font is sized against the column width (container units)
+   to keep it from overflowing at any breakpoint. */
+.donut {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  container-type: inline-size;
+  overflow: hidden;
+}
+
+.donut pre {
+  font-family: ui-monospace, 'Menlo', 'Consolas', monospace;
+  font-size: min(10px, 2cqw);
+  line-height: 1.2;
+  color: #a8a29e;
+  user-select: none;
 }
 
 .webring a {

@@ -169,10 +169,66 @@ function initScrollFade() {
   update();
 }
 
+// Spinning ASCII donut -- the classic donut.c torus, rasterized into a <pre>.
+// Rotation is driven by elapsed time so the speed doesn't depend on frame
+// rate, and rendering is throttled to ~30fps since the text repaint is the
+// expensive part. Under prefers-reduced-motion it draws one frame and stops.
+function initDonut() {
+  const el = document.getElementById('donut');
+  if (!el) return;
+
+  const W = 80;
+  const H = 22;
+  const CHARS = '.,-~:;=!*#$@';
+
+  function render(A, B) {
+    const buf = new Array(W * H).fill(' ');
+    const depth = new Float32Array(W * H);
+    const cA = Math.cos(A), sA = Math.sin(A);
+    const cB = Math.cos(B), sB = Math.sin(B);
+
+    for (let j = 0; j < 6.28; j += 0.07) {
+      const ct = Math.cos(j), st = Math.sin(j);
+      for (let i = 0; i < 6.28; i += 0.02) {
+        const sp = Math.sin(i), cp = Math.cos(i);
+        const h = ct + 2;
+        const D = 1 / (sp * h * sA + st * cA + 5);
+        const t = sp * h * cA - st * sA;
+        const x = (W / 2 + 30 * D * (cp * h * cB - t * sB)) | 0;
+        const y = (H / 2 + 15 * D * (cp * h * sB + t * cB)) | 0;
+        const o = x + W * y;
+        if (y >= 0 && y < H && x >= 0 && x < W && D > depth[o]) {
+          depth[o] = D;
+          const lum = (8 * ((st * sA - sp * ct * cA) * cB - sp * ct * sA - st * cA - cp * ct * sB)) | 0;
+          buf[o] = CHARS[lum > 0 ? lum : 0];
+        }
+      }
+    }
+
+    const rows = [];
+    for (let r = 0; r < H; r++) rows.push(buf.slice(r * W, (r + 1) * W).join(''));
+    el.textContent = rows.join('\n');
+  }
+
+  render(1, 0.4);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let last = 0;
+  function tick(now) {
+    if (now - last >= 33) {
+      last = now;
+      render(1 + now * 0.0011, 0.4 + now * 0.0005);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initEntranceAnimations();
   initScrollFade();
+  initDonut();
 });
 
