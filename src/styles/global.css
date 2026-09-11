@@ -254,11 +254,11 @@ body {
   margin-top: 0.85rem;
 }
 
-/* ASCII Donut
+/* ASCII Globe
    Fills the gap between the intro and the links. The frame is always 80
-   columns, so the font is sized against the column width (container units)
-   to keep it from overflowing at any breakpoint. */
-.donut {
+   columns by 32 rows, so the font is sized against the column width
+   (container units) to keep it from overflowing at any breakpoint. */
+.globe {
   flex: 1;
   min-height: 0;
   display: flex;
@@ -268,12 +268,24 @@ body {
   overflow: hidden;
 }
 
-.donut pre {
+.globe pre {
   font-family: ui-monospace, 'Menlo', 'Consolas', monospace;
   font-size: min(10px, 2cqw);
   line-height: 1.2;
   color: #a8a29e;
   user-select: none;
+}
+
+/* In the locked two-column layout the gap has a definite height, so the
+   font is also sized against it and the globe never gets clipped. */
+@media (min-width: 901px) and (min-height: 641px) {
+  .globe {
+    container-type: size;
+  }
+
+  .globe pre {
+    font-size: min(10px, 2cqw, 2.5cqh);
+  }
 }
 
 .webring a {
