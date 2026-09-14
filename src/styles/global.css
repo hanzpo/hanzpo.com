@@ -108,8 +108,8 @@ body {
   grid-row: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2.5rem;
+  justify-content: space-between;
+  gap: 3rem;
   min-height: 0;
 }
 
@@ -270,7 +270,7 @@ body {
 }
 
 /* Social Links
-   A single row separated by dots, with the webring beneath. Set a
+   A single row separated by dots, with the webring centered beneath. Set a
    step below the headings on the right so the block reads as secondary to
    the intro above it. */
 .social .section-title {
@@ -309,6 +309,40 @@ body {
   justify-content: flex-start;
   gap: 0.5rem;
   margin-top: 0.85rem;
+}
+
+/* ASCII Globe
+   Fills the gap between the intro and the links. The frame is always 80
+   columns by 32 rows, so the font is sized against the column width
+   (container units) to keep it from overflowing at any breakpoint. */
+.globe {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  container-type: inline-size;
+  overflow: hidden;
+}
+
+.globe pre {
+  font-family: ui-monospace, 'Menlo', 'Consolas', monospace;
+  font-size: min(10px, 2cqw);
+  line-height: 1.2;
+  color: #a8a29e;
+  user-select: none;
+}
+
+/* In the locked two-column layout the gap has a definite height, so the
+   font is also sized against it and the globe never gets clipped. */
+@media (min-width: 901px) and (min-height: 641px) {
+  .globe {
+    container-type: size;
+  }
+
+  .globe pre {
+    font-size: min(10px, 2cqw, 2.5cqh);
+  }
 }
 
 .webring a {
