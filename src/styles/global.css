@@ -25,7 +25,7 @@ body {
 .background-image {
   background-color: #221F18;
   background-position: center, center;
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 20px 20px;
@@ -67,7 +67,8 @@ body {
   outline-offset: 2px;
 }
 
-.work-card:focus-visible {
+.work-card:focus-visible,
+.project-card:focus-visible {
   border-color: rgba(255, 255, 255, 0.3);
   outline: 2px solid #e5e7eb;
   outline-offset: 2px;
@@ -84,97 +85,254 @@ body {
   outline-offset: 4px;
 }
 
-/* Typography */
-.font-crimson {
-  font-family: 'Crimson Pro', serif;
+/* Index Layout
+   One screen, two columns: intro + links on the left, work + school on the
+   right. The page itself never scrolls -- only the right column does. */
+.index-body {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
-/* Hero Section */
-.hero-section {
-  min-height: 100svh;
+.index-grid {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 56px;
+  padding: 64px;
+}
+
+.index-left {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.5rem;
+  min-height: 0;
+}
+
+.index-right {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Breathing room so the cards' hover scale isn't clipped by the scroll
+     container; the negative margin keeps content optically in place. */
+  padding: 6px 8px;
+  margin: -6px -8px;
+  /* Edges fade out to signal there's more to scroll to. Sized from the
+     scroll position in main.js, so each edge ramps in as you leave it and
+     stays flat at 0 when there's nothing that way. A mask rather than an
+     overlay, so the page's grid still shows through the faded band. */
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bottom)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bottom)),
+    transparent
+  );
+}
+
+/* Scroll hint
+   Shares the right column's grid cell, aligned to its bottom edge and then
+   pushed just below it into the page padding, so it sits under the faded
+   last card rather than on top of it and stays put while the column
+   scrolls. main.js shows it only while the column overflows and hides it
+   after the first scroll. */
+.scroll-hint {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  justify-self: center;
+  transform: translateY(calc(100% + 0.5rem));
   display: flex;
   align-items: center;
-  position: relative;
+  gap: 0.35rem;
+  font-family: 'Lora', serif;
+  font-size: 0.8125rem;
+  color: #a8a29e;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-.hero-content {
-  width: 100%;
-  padding: 0 1rem;
+.scroll-hint.is-ready.is-visible {
+  opacity: 1;
 }
 
-@media (min-width: 768px) {
-  .hero-content {
+.scroll-hint-arrow {
+  color: #57534e;
+  animation: hint-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+/* Single column: the whole page scrolls again. Also applied to short
+   viewports, where a locked left column would strand its own content. */
+@media (max-width: 900px), (max-height: 640px) {
+  .index-body {
+    height: auto;
+    overflow: visible;
+  }
+
+  /* The right column is no longer its own scroll region here. */
+  .scroll-hint {
+    display: none;
+  }
+
+  .index-grid {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .index-right {
+    overflow-y: visible;
     padding: 0;
-    margin-left: 10%;
+    margin: 0;
+    /* Not a scroll container here, so it must never carry an edge fade. */
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 
-@media (min-width: 1024px) {
-  .hero-content {
-    margin-left: 20%;
+@media (max-width: 900px) {
+  .index-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 3rem 1.5rem;
+  }
+
+  .index-left {
+    justify-content: flex-start;
+  }
+
+  .index-right {
+    grid-column: 1;
+    grid-row: 2;
   }
 }
 
+/* Typography */
 .hero-title {
   font-family: 'Crimson Pro', serif;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  font-size: 3.5rem;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+  color: #e7e5e4;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 900px) {
   .hero-title {
-    font-size: 3rem;
-    line-height: 1;
-    text-align: left;
-  }
-}
-
-@media (min-width: 1024px) {
-  .hero-title {
-    font-size: 3.75rem;
-    line-height: 1;
+    font-size: 2.625rem;
   }
 }
 
 .hero-description {
   font-family: 'Crimson Pro', serif;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  margin-bottom: 2rem;
+  font-size: 1.375rem;
+  line-height: 1.9rem;
   color: #d6d3d1;
-  text-align: center;
-  max-width: 32rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-@media (min-width: 768px) {
-  .hero-description {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    text-align: left;
-    margin-left: 0;
-    margin-right: 0;
-  }
-}
-
-.recently-title {
+.section-title {
   font-family: 'Crimson Pro', serif;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-bottom: 0.5rem;
+  color: #e7e5e4;
+}
+
+/* Social Links
+   A single row separated by dots, with the webring beneath. Set a
+   step below the headings on the right so the block reads as secondary to
+   the intro above it. */
+.social .section-title {
   font-size: 1.25rem;
   line-height: 1.75rem;
-  margin-bottom: 0.75rem;
-  color: #e7e5e4;
-  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
-@media (min-width: 768px) {
-  .recently-title {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    text-align: left;
-  }
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Lora', serif;
+}
+
+.social-links .dot {
+  color: #57534e;
+  user-select: none;
+}
+
+.social-link {
+  font-size: 0.9375rem;
+  color: #a8a29e;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.social-link:hover {
+  color: #e7e5e4;
+}
+
+.webring {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.webring a {
+  display: flex;
+  align-items: center;
+  font-size: 0.9375rem;
+  color: #a8a29e;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.webring a:hover {
+  color: #e7e5e4;
+}
+
+.webring img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.webring a:hover img {
+  opacity: 1;
 }
 
 /* Work Cards */
@@ -182,44 +340,28 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
   font-family: 'Lora', serif;
 }
 
-@media (min-width: 768px) {
-  .work-cards {
-    max-width: 400px;
-    margin: 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .work-cards {
-    max-width: 500px;
-  }
-}
-
-.work-card {
-  padding: 0.5rem;
+/* Work and project cards share one rule so their resting and hover states
+   can't drift apart. */
+.work-card,
+.project-card {
+  padding: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   backdrop-filter: blur(1px);
+  text-decoration: none;
   transition: border-color 0.2s, transform 0.2s;
 }
 
-@media (min-width: 768px) {
-  .work-card {
-    padding: 0.75rem;
-  }
-}
-
-.work-card:hover {
+.work-card:hover,
+.project-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
   transform: scale(1.02);
 }
@@ -227,42 +369,35 @@ body {
 .work-card-left {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .work-logo {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   border-radius: 0.5rem;
-  margin-right: 0.5rem;
   overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .work-logo {
-    width: 3rem;
-    height: 3rem;
-    margin-right: 0.75rem;
-  }
 }
 
 .work-logo.white-bg {
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 0.5rem;
+  padding: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
 }
 
-@media (min-width: 768px) {
-  .work-logo.white-bg {
-    padding: 0.625rem;
-  }
-}
-
 .work-logo img {
   width: 100%;
   height: 100%;
+}
+
+/* A circular mark needs less inset than a square glyph to read at the same
+   optical weight in the plate. */
+.work-logo.round-mark {
+  padding: 2px;
 }
 
 .logo-cover {
@@ -273,164 +408,66 @@ body {
   object-fit: contain;
 }
 
-.work-info h3 {
+.work-company {
   font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
   color: #e7e5e4;
-}
-
-@media (min-width: 768px) {
-  .work-info h3 {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
 }
 
 .work-role {
   color: #a8a29e;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .work-role {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
 }
 
 .work-dates {
-  display: none;
   color: #a8a29e;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   white-space: nowrap;
 }
 
-@media (min-width: 768px) {
+/* Too narrow to sit dates beside the role; the modal still shows them. */
+@media (max-width: 560px) {
   .work-dates {
-    display: block;
-    font-size: 1rem;
-  }
-}
-
-/* Scroll Indicator */
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  text-decoration: none;
-  display: block;
-}
-
-.scroll-indicator:hover .scroll-text,
-.scroll-indicator:hover .scroll-arrow {
-  color: #e7e5e4;
-}
-
-.scroll-text {
-  color: #a8a29e;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  margin-bottom: 0.5rem;
-  transition: color 0.2s;
-  display: block;
-  text-align: center;
-}
-
-.mobile-only {
-  display: inline;
-}
-
-.desktop-only {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .mobile-only {
     display: none;
   }
-  .desktop-only {
-    display: inline;
-  }
 }
 
-.scroll-arrow {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0 auto;
-  color: #a8a29e;
-  transition: color 0.2s;
-  animation: bounce 1s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-  }
-  50% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  }
-}
-
-/* Social Section */
-.social-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-
-.social-content {
-  text-align: center;
-}
-
-.social-title {
-  font-family: 'Crimson Pro', serif;
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  color: #e7e5e4;
-  margin-bottom: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .social-title {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
-}
-
-.social-links {
+/* Projects
+   Plain links for now; the card markup matches the work cards so they can
+   become modal triggers later without restyling. */
+.project-cards {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
   font-family: 'Lora', serif;
 }
 
-.social-link {
-  display: block;
-  color: #a8a29e;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  text-decoration: none;
-  transition: color 0.2s;
-  padding: 0.25rem 0;
-}
-
-@media (min-width: 768px) {
-  .social-link {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-}
-
-.social-link:hover {
+.project-name {
+  font-weight: 500;
   color: #e7e5e4;
+}
+
+.project-tagline {
+  color: #a8a29e;
+}
+
+/* School */
+.school-card {
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(1px);
+  font-family: 'Lora', serif;
+}
+
+.school-name {
+  font-weight: 500;
+  color: #e7e5e4;
+}
+
+.school-degree {
+  color: #a8a29e;
 }
 
 /* Modal */
@@ -550,62 +587,45 @@ body {
   }
 }
 
-.webring {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.webring a {
-  color: #a8a29e;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.webring a:hover {
-  color: #e7e5e4;
-}
-
-.webring img {
-  opacity: 0.8;
-}
-
-/* Animations */
+/* Animations
+   The entrance runs as a keyframe rather than a transition so transform
+   reverts to the element's own styles once it finishes -- a settled
+   transform would otherwise override the work cards' hover scale. */
 .animate-item {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .animate-item.visible {
   opacity: 1;
-  transform: translateY(0);
+  animation: fade-up 0.5s ease-out backwards;
+  animation-delay: var(--d, 0s);
 }
 
-/* Scroll indicator needs combined transforms to stay centered */
-.scroll-indicator.animate-item {
-  transform: translateX(-50%) translateY(16px);
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.scroll-indicator.animate-item.visible {
-  transform: translateX(-50%) translateY(0);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-item {
+    opacity: 1;
+  }
+
+  .animate-item.visible {
+    animation: none;
+  }
+
+  .scroll-hint-arrow {
+    animation: none;
+  }
 }
-
-/* Staggered animation delays */
-.hero-section .animate-item:nth-child(1) { transition-delay: 0.12s; }
-.hero-section .animate-item:nth-child(2) { transition-delay: 0.24s; }
-.hero-section .animate-item:nth-child(3) { transition-delay: 0.36s; }
-.work-cards .animate-item:nth-child(1) { transition-delay: 0.56s; }
-.work-cards .animate-item:nth-child(2) { transition-delay: 0.64s; }
-.work-cards .animate-item:nth-child(3) { transition-delay: 0.72s; }
-.scroll-indicator.animate-item { transition-delay: 0.84s; }
-
-.social-section .animate-item:nth-child(1) { transition-delay: 0.12s; }
-.social-links .animate-item:nth-child(1) { transition-delay: 0.20s; }
-.social-links .animate-item:nth-child(2) { transition-delay: 0.28s; }
-.social-links .animate-item:nth-child(3) { transition-delay: 0.36s; }
-.social-links .animate-item:nth-child(4) { transition-delay: 0.44s; }
-.social-links .animate-item:nth-child(5) { transition-delay: 0.52s; }
-.social-links .animate-item:nth-child(6) { transition-delay: 0.60s; }
-

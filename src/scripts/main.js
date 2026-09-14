@@ -1,12 +1,22 @@
 // Work experience data
 const workExperiences = {
+  rilla: {
+    company: 'rilla',
+    role: 'software engineer intern',
+    dates: 'may 2026 - aug 2026',
+    logo: '/images/rilla.png',
+    logoAlt: 'rilla logo',
+    description: 'building speech analytics for outside sales teams',
+    logoStyle: 'cover',
+    hasWhiteBg: false,
+  },
   kalshi: {
     company: 'kalshi',
     role: 'software engineer intern',
-    dates: 'jan 2026 - present',
+    dates: 'jan 2026 - apr 2026',
     logo: '/images/kalshi.png',
     logoAlt: 'kalshi logo',
-    description: 'building software for the world\'s first regulated prediction market.',
+    description: 'building software for the world\'s first regulated prediction market',
     logoStyle: 'cover',
     hasWhiteBg: false,
   },
@@ -16,7 +26,7 @@ const workExperiences = {
     dates: 'may 2025 - aug 2025',
     logo: '/images/shopify_glyph.svg',
     logoAlt: 'shopify logo',
-    description: 'worked on checkout flows for retail point of sale systems with ruby, react native, gRPC, and graphql.',
+    description: 'worked on checkout flows for retail point of sale systems with ruby, react native, gRPC, and graphql',
     logoStyle: 'contain',
     hasWhiteBg: true,
   },
@@ -26,7 +36,7 @@ const workExperiences = {
     dates: 'sept 2024 - aug 2025',
     logo: '/images/cohere_logo.svg',
     logoAlt: 'cohere logo',
-    description: 'worked on data quality and evaluation for language models on coding tasks.',
+    description: 'worked on data quality and evaluation for language models on coding tasks',
     logoStyle: 'contain',
     hasWhiteBg: true,
   },
@@ -121,41 +131,60 @@ function initModal() {
   };
 }
 
-// Intersection Observer for scroll animations
-function initScrollAnimations() {
-  // Animate hero section items on load
-  const heroItems = document.querySelectorAll('.hero-section .animate-item, .work-cards .animate-item, .scroll-indicator.animate-item');
-  
-  // Trigger hero animations after a small delay
+// Entrance animations. The page is a single screen now, so everything
+// animates in on load; each item carries its own delay via the --d custom
+// property set in the markup.
+function initEntranceAnimations() {
+  const items = document.querySelectorAll('.animate-item');
+
   setTimeout(() => {
-    heroItems.forEach(item => {
+    items.forEach(item => {
       item.classList.add('visible');
     });
   }, 100);
+}
 
-  // Intersection Observer for social section
-  const socialSection = document.getElementById('next');
-  const socialItems = socialSection.querySelectorAll('.animate-item');
+// Fades the right column's edges to show it scrolls. Each edge grows with
+// how far you've scrolled away from it, capped at FADE_MAX, so it eases in
+// instead of popping and sits at 0 when there's nothing that direction --
+// including when the layout collapses and the column stops scrolling at all.
+// A "scroll for more" hint backs this up: it appears once the entrance
+// animation has settled, only while the column actually overflows, and goes
+// away for good the first time the visitor scrolls.
+function initScrollFade() {
+  const column = document.querySelector('.index-right');
+  if (!column) return;
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        socialItems.forEach(item => {
-          item.classList.add('visible');
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.4
-  });
+  const FADE_MAX = 48;
+  const hint = document.querySelector('.scroll-hint');
+  let hintDismissed = false;
 
-  observer.observe(socialSection);
+  if (hint) setTimeout(() => hint.classList.add('is-ready'), 1500);
+
+  function update() {
+    const scrollable = column.scrollHeight - column.clientHeight;
+    const top = scrollable > 1 ? Math.min(column.scrollTop, FADE_MAX) : 0;
+    const bottom =
+      scrollable > 1 ? Math.min(scrollable - column.scrollTop, FADE_MAX) : 0;
+
+    column.style.setProperty('--fade-top', `${top}px`);
+    column.style.setProperty('--fade-bottom', `${bottom}px`);
+
+    if (hint) {
+      if (column.scrollTop > 4) hintDismissed = true;
+      hint.classList.toggle('is-visible', scrollable > 1 && !hintDismissed);
+    }
+  }
+
+  column.addEventListener('scroll', update, { passive: true });
+  if (window.ResizeObserver) new ResizeObserver(update).observe(column);
+  update();
 }
 
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   initModal();
-  initScrollAnimations();
+  initEntranceAnimations();
+  initScrollFade();
 });
 

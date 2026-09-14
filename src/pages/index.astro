@@ -3,10 +3,10 @@ import Base from "../layouts/Base.astro";
 
 const title = "hey, i'm hanz";
 const description =
-  "i study computer science at the university of waterloo. i like building things and solving problems. currently at kalshi, building software for the world's first regulated prediction market.";
+  "i study computer science at the university of waterloo. i like building things and solving problems.";
 ---
 
-<Base title={title} description={description} path="/" bodyClass="background-image">
+<Base title={title} description={description} path="/" bodyClass="background-image index-body">
   <Fragment slot="head">
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" is:inline set:html={JSON.stringify({
@@ -70,7 +70,20 @@ const description =
         {
           "@type": "Role",
           "roleName": "Software Engineer Intern",
+          "startDate": "2026-05",
+          "endDate": "2026-08",
+          "description": "Software engineer intern at Rilla, building speech analytics for outside sales teams.",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Rilla",
+            "description": "A speech analytics platform for outside sales and service teams."
+          }
+        },
+        {
+          "@type": "Role",
+          "roleName": "Software Engineer Intern",
           "startDate": "2026-01",
+          "endDate": "2026-04",
           "description": "Software engineer intern at Kalshi, building software for the world's first regulated prediction market exchange.",
           "worksFor": {
             "@type": "Organization",
@@ -157,85 +170,32 @@ const description =
 
   <a href="#main-content" class="skip-link">skip to main content</a>
 
-  <!-- Hero Section -->
-  <div class="hero-section" id="main-content">
-    <div class="hero-content">
-      <h1 class="hero-title animate-item">hey, i'm hanz.</h1>
+  <div class="index-grid" id="main-content">
+    <!-- Left column: intro + links. Fixed; does not scroll. -->
+    <div class="index-left">
+      <div class="intro">
+        <h1 class="hero-title animate-item" style="--d: 0.12s">hey, i'm hanz.</h1>
 
-      <p class="hero-description animate-item">
-        i study computer science at the university of waterloo. i like
-        building things and solving problems. currently at kalshi, building
-        software for the world's first regulated prediction market.
-      </p>
-
-      <h2 class="recently-title animate-item">recently:</h2>
-
-      <div class="work-cards">
-        <!-- Kalshi -->
-        <div class="work-card animate-item" data-work="kalshi" role="button" tabindex="0">
-          <div class="work-card-left">
-            <div class="work-logo">
-              <img src="/images/kalshi.png" alt="kalshi logo" class="logo-cover" />
-            </div>
-            <div class="work-info">
-              <h3 class="work-company">kalshi</h3>
-              <p class="work-role">software engineer intern</p>
-            </div>
-          </div>
-          <div class="work-dates">jan 2026 - present</div>
-        </div>
-
-        <!-- Shopify -->
-        <div class="work-card animate-item" data-work="shopify" role="button" tabindex="0">
-          <div class="work-card-left">
-            <div class="work-logo white-bg">
-              <img src="/images/shopify_glyph.svg" alt="shopify logo" class="logo-contain" />
-            </div>
-            <div class="work-info">
-              <h3 class="work-company">shopify</h3>
-              <p class="work-role">engineering intern</p>
-            </div>
-          </div>
-          <div class="work-dates">may 2025 - aug 2025</div>
-        </div>
-
-        <!-- Cohere -->
-        <div class="work-card animate-item" data-work="cohere" role="button" tabindex="0">
-          <div class="work-card-left">
-            <div class="work-logo white-bg">
-              <img src="/images/cohere_logo.svg" alt="cohere logo" class="logo-contain" />
-            </div>
-            <div class="work-info">
-              <h3 class="work-company">cohere</h3>
-              <p class="work-role">senior data quality specialist</p>
-            </div>
-          </div>
-          <div class="work-dates">sept 2024 - aug 2025</div>
-        </div>
+        <p class="hero-description animate-item" style="--d: 0.24s">
+          i study computer science at the university of waterloo. i like
+          building things and solving problems.
+        </p>
       </div>
 
-      <a href="#next" class="scroll-indicator animate-item">
-        <p class="scroll-text">
-          <span class="mobile-only">swipe to see more</span>
-          <span class="desktop-only">scroll to see more</span>
-        </p>
-        <svg class="scroll-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </a>
-    </div>
-  </div>
-
-  <!-- Social Links Section -->
-  <div id="next" class="social-section">
-    <div class="social-content">
-      <h2 class="social-title animate-item">find me here:</h2>
-      <div class="social-links">
-        <a href="https://www.github.com/HanzPo" class="social-link animate-item" target="_blank" rel="noopener noreferrer">github</a>
-        <a href="https://www.linkedin.com/in/hanznathanpo/" class="social-link animate-item" target="_blank" rel="noopener noreferrer">linkedin</a>
-        <a href="https://x.com/hanznathanpo" class="social-link animate-item" target="_blank" rel="noopener noreferrer">twitter</a>
-        <a href="https://www.instagram.com/hanznathanpo" class="social-link animate-item" target="_blank" rel="noopener noreferrer">instagram</a>
-        <div class="webring animate-item">
+      <div class="social">
+        <h2 class="section-title animate-item" style="--d: 0.4s">find me here:</h2>
+        <div class="social-links">
+          <a href="https://www.github.com/HanzPo" class="social-link animate-item" style="--d: 0.48s" target="_blank" rel="noopener noreferrer">github</a>
+          <span class="dot animate-item" style="--d: 0.51s" aria-hidden="true">·</span>
+          <a href="https://www.linkedin.com/in/hanznathanpo/" class="social-link animate-item" style="--d: 0.54s" target="_blank" rel="noopener noreferrer">linkedin</a>
+          <span class="dot animate-item" style="--d: 0.57s" aria-hidden="true">·</span>
+          <a href="https://x.com/hanznathanpo" class="social-link animate-item" style="--d: 0.6s" target="_blank" rel="noopener noreferrer">twitter</a>
+          <span class="dot animate-item" style="--d: 0.63s" aria-hidden="true">·</span>
+          <a href="https://www.instagram.com/hanznathanpo" class="social-link animate-item" style="--d: 0.66s" target="_blank" rel="noopener noreferrer">instagram</a>
+          <span class="dot animate-item" style="--d: 0.69s" aria-hidden="true">·</span>
+          <a href="mailto:hnqpo@uwaterloo.ca" class="social-link animate-item" style="--d: 0.72s">email</a>
+        </div>
+        <div class="webring animate-item" style="--d: 0.8s">
           <a href="https://cs.uwatering.com/#https://hanzpo.com?nav=prev" aria-label="Previous site in CS Webring">←</a>
           <a href="https://cs.uwatering.com/#https://hanzpo.com" target="_blank" rel="noopener noreferrer" aria-label="CS Webring">
             <img src="https://cs.uwatering.com/icon.white.svg" alt="CS Webring" width="24" height="24" />
@@ -243,6 +203,141 @@ const description =
           <a href="https://cs.uwatering.com/#https://hanzpo.com?nav=next" aria-label="Next site in CS Webring">→</a>
         </div>
       </div>
+    </div>
+
+    <!-- Right column: the only scrollable region. -->
+    <div class="index-right">
+      <section class="panel">
+        <h2 class="section-title animate-item" style="--d: 0.28s">work</h2>
+
+        <div class="work-cards">
+          <!-- Rilla -->
+          <div class="work-card animate-item" style="--d: 0.36s" data-work="rilla" role="button" tabindex="0">
+            <div class="work-card-left">
+              <div class="work-logo">
+                <img src="/images/rilla.png" alt="rilla logo" class="logo-cover" />
+              </div>
+              <div class="work-info">
+                <h3 class="work-company">rilla</h3>
+                <p class="work-role">software engineer intern</p>
+              </div>
+            </div>
+            <div class="work-dates">may 2026 - aug 2026</div>
+          </div>
+
+          <!-- Kalshi -->
+          <div class="work-card animate-item" style="--d: 0.44s" data-work="kalshi" role="button" tabindex="0">
+            <div class="work-card-left">
+              <div class="work-logo">
+                <img src="/images/kalshi.png" alt="kalshi logo" class="logo-cover" />
+              </div>
+              <div class="work-info">
+                <h3 class="work-company">kalshi</h3>
+                <p class="work-role">software engineer intern</p>
+              </div>
+            </div>
+            <div class="work-dates">jan 2026 - apr 2026</div>
+          </div>
+
+          <!-- Shopify -->
+          <div class="work-card animate-item" style="--d: 0.52s" data-work="shopify" role="button" tabindex="0">
+            <div class="work-card-left">
+              <div class="work-logo white-bg">
+                <img src="/images/shopify_glyph.svg" alt="shopify logo" class="logo-contain" />
+              </div>
+              <div class="work-info">
+                <h3 class="work-company">shopify</h3>
+                <p class="work-role">engineering intern</p>
+              </div>
+            </div>
+            <div class="work-dates">may 2025 - aug 2025</div>
+          </div>
+
+          <!-- Cohere -->
+          <div class="work-card animate-item" style="--d: 0.6s" data-work="cohere" role="button" tabindex="0">
+            <div class="work-card-left">
+              <div class="work-logo white-bg">
+                <img src="/images/cohere_logo.svg" alt="cohere logo" class="logo-contain" />
+              </div>
+              <div class="work-info">
+                <h3 class="work-company">cohere</h3>
+                <p class="work-role">senior data quality specialist</p>
+              </div>
+            </div>
+            <div class="work-dates">sept 2024 - aug 2025</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title animate-item" style="--d: 0.68s">school</h2>
+
+        <div class="school-card animate-item" style="--d: 0.76s">
+          <div class="work-logo white-bg round-mark">
+            <img src="/images/uwaterloo.svg" alt="university of waterloo logo" class="logo-contain" />
+          </div>
+          <div>
+            <h3 class="school-name">university of waterloo</h3>
+            <p class="school-degree">computer science</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="section-title animate-item" style="--d: 0.84s">projects</h2>
+
+        <div class="project-cards">
+          <a
+            class="project-card animate-item"
+            style="--d: 0.92s"
+            href="https://kalshi.tools"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div>
+              <h3 class="project-name">kalshi.tools</h3>
+              <p class="project-tagline">shareable market graphic generators</p>
+            </div>
+          </a>
+
+          <a
+            class="project-card animate-item"
+            style="--d: 1s"
+            href="https://riverchat.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div>
+              <h3 class="project-name">riverchat.app</h3>
+              <p class="project-tagline">
+                a graph-based llm interface that allows you to explore multiple
+                conversation paths
+              </p>
+            </div>
+          </a>
+
+          <a
+            class="project-card animate-item"
+            style="--d: 1.08s"
+            href="https://devpost.com/software/shapeshift-kvhjxr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div>
+              <h3 class="project-name">shapeshift</h3>
+              <p class="project-tagline">
+                a gesture-first, ai-assisted 3d workspace where your hands craft
+                the scene
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Sits over the bottom of the right column while it has more to show. -->
+    <div class="scroll-hint" aria-hidden="true">
+      scroll for more <span class="scroll-hint-arrow">&darr;</span>
     </div>
   </div>
 
