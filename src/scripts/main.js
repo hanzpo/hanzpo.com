@@ -148,11 +148,18 @@ function initEntranceAnimations() {
 // how far you've scrolled away from it, capped at FADE_MAX, so it eases in
 // instead of popping and sits at 0 when there's nothing that direction --
 // including when the layout collapses and the column stops scrolling at all.
+// A "scroll for more" hint backs this up: it appears once the entrance
+// animation has settled, only while the column actually overflows, and goes
+// away for good the first time the visitor scrolls.
 function initScrollFade() {
   const column = document.querySelector('.index-right');
   if (!column) return;
 
   const FADE_MAX = 48;
+  const hint = document.querySelector('.scroll-hint');
+  let hintDismissed = false;
+
+  if (hint) setTimeout(() => hint.classList.add('is-ready'), 1500);
 
   function update() {
     const scrollable = column.scrollHeight - column.clientHeight;
@@ -162,6 +169,11 @@ function initScrollFade() {
 
     column.style.setProperty('--fade-top', `${top}px`);
     column.style.setProperty('--fade-bottom', `${bottom}px`);
+
+    if (hint) {
+      if (column.scrollTop > 4) hintDismissed = true;
+      hint.classList.toggle('is-visible', scrollable > 1 && !hintDismissed);
+    }
   }
 
   column.addEventListener('scroll', update, { passive: true });

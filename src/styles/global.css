@@ -104,6 +104,8 @@ body {
 }
 
 .index-left {
+  grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -112,6 +114,8 @@ body {
 }
 
 .index-right {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -146,12 +150,60 @@ body {
   );
 }
 
+/* Scroll hint
+   Shares the right column's grid cell, aligned to its bottom edge and then
+   pushed just below it into the page padding, so it sits under the faded
+   last card rather than on top of it and stays put while the column
+   scrolls. main.js shows it only while the column overflows and hides it
+   after the first scroll. */
+.scroll-hint {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  justify-self: center;
+  transform: translateY(calc(100% + 0.5rem));
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Lora', serif;
+  font-size: 0.8125rem;
+  color: #a8a29e;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.scroll-hint.is-ready.is-visible {
+  opacity: 1;
+}
+
+.scroll-hint-arrow {
+  color: #57534e;
+  animation: hint-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
 /* Single column: the whole page scrolls again. Also applied to short
    viewports, where a locked left column would strand its own content. */
 @media (max-width: 900px), (max-height: 640px) {
   .index-body {
     height: auto;
     overflow: visible;
+  }
+
+  /* The right column is no longer its own scroll region here. */
+  .scroll-hint {
+    display: none;
   }
 
   .index-grid {
@@ -179,6 +231,11 @@ body {
 
   .index-left {
     justify-content: flex-start;
+  }
+
+  .index-right {
+    grid-column: 1;
+    grid-row: 2;
   }
 }
 
@@ -565,6 +622,10 @@ body {
   }
 
   .animate-item.visible {
+    animation: none;
+  }
+
+  .scroll-hint-arrow {
     animation: none;
   }
 }
