@@ -3,7 +3,7 @@ const workExperiences = {
   rilla: {
     company: 'rilla',
     role: 'software engineer intern',
-    dates: 'may 2026 - present',
+    dates: 'may 2026 - aug 2026',
     logo: '/images/rilla.png',
     logoAlt: 'rilla logo',
     description: 'building speech analytics for outside sales teams.',
