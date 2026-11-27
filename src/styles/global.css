@@ -72,7 +72,6 @@ body {
   border-color: rgba(255, 255, 255, 0.3);
   outline: 2px solid #e5e7eb;
   outline-offset: 2px;
-  transform: scale(1.02);
 }
 
 .modal-close:focus-visible {
@@ -124,7 +123,7 @@ body {
   overscroll-behavior: contain;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  /* Breathing room so the cards' hover scale isn't clipped by the scroll
+  /* Breathing room so the cards' focus outline isn't clipped by the scroll
      container; the negative margin keeps content optically in place. */
   padding: 6px 8px;
   margin: -6px -8px;
@@ -357,13 +356,13 @@ body {
   cursor: pointer;
   backdrop-filter: blur(1px);
   text-decoration: none;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.2s, background-color 0.2s;
 }
 
 .work-card:hover,
 .project-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.02);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .work-card-left {
@@ -619,8 +618,7 @@ body {
 
 /* Animations
    The entrance runs as a keyframe rather than a transition so transform
-   reverts to the element's own styles once it finishes -- a settled
-   transform would otherwise override the work cards' hover scale. */
+   reverts to the element's own styles once it finishes. */
 .animate-item {
   opacity: 0;
 }
