@@ -53,7 +53,19 @@ function initModal() {
   const modalDates = document.getElementById('modal-dates');
   const modalDescription = document.getElementById('modal-description');
 
-  function openModal(workId) {
+  const modalContent = modal.querySelector('.modal-content');
+
+  function setOrigin(x, y) {
+    const cx = modalContent.offsetLeft + modalContent.offsetWidth / 2;
+    const cy = modalContent.offsetTop + modalContent.offsetHeight / 2;
+    modalContent.style.transition = 'none';
+    modalContent.style.setProperty('--from-x', `${x - cx}px`);
+    modalContent.style.setProperty('--from-y', `${y - cy}px`);
+    modalContent.offsetWidth;
+    modalContent.style.transition = '';
+  }
+
+  function openModal(workId, x, y) {
     const experience = workExperiences[workId];
     if (!experience) return;
 
@@ -72,6 +84,8 @@ function initModal() {
     modalDates.textContent = experience.dates;
     modalDescription.textContent = experience.description;
 
+    setOrigin(x, y);
+
     // Show modal
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
@@ -88,24 +102,25 @@ function initModal() {
 
   // Event listeners for work cards
   document.querySelectorAll('.work-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
       lastFocusedElement = card;
-      openModal(card.dataset.work);
+      openModal(card.dataset.work, e.clientX, e.clientY);
     });
 
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         lastFocusedElement = card;
-        openModal(card.dataset.work);
+        const rect = card.getBoundingClientRect();
+        openModal(card.dataset.work, rect.left + rect.width / 2, rect.top + rect.height / 2);
       }
     });
   });
 
   // Focus the close button when modal opens
   const originalOpen = openModal;
-  openModal = function(workId) {
-    originalOpen(workId);
+  openModal = function(workId, x, y) {
+    originalOpen(workId, x, y);
     modalClose.focus();
   };
 
